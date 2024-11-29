@@ -1,0 +1,25 @@
+http:
+  routers:
+    pihole:
+      entryPoints:
+        - "websecure"
+        - "web"
+      rule: "Host(`pihole.ruinformatique.lan`)"
+      tls: true
+      service: pihole
+      middlewares:
+        - pihole-redirect
+
+  services:
+    pihole:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.15:81"
+        passHostHeader: true
+
+  middlewares:
+    pihole-redirect:
+      redirectRegex:
+        regex: "^https?://pihole\\.ruinformatique\\.lan/$"
+        replacement: "https://pihole.ruinformatique.lan/admin/"
+

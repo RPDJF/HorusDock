@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /etc/ca/ruinformatique.lan/ruinformatique.lan.crt
+      keyFile: /etc/ca/ruinformatique.lan/ruinformatique.lan.key

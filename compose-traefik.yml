@@ -26,5 +26,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /data/traefik/ca/:/etc/ca/
-      - /data/traefik/custom.d/:/etc/traefik/custom.d/
+      - ./conf/traefik/custom.d/:/etc/traefik/custom.d/
     restart: "always"
