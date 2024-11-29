@@ -13,7 +13,8 @@ With HorusDock, you can manage services like monitoring, media servers, ad-block
 ---
 
 ## 📝 Notes  
-HorusDock is designed with absolute paths for volumes, meaning it works best on my specific setup. If you’re adapting it, ensure you update paths in the `compose-*.yml` files! ⚠️
+HorusDock is designed with absolute paths for volumes, meaning it works best on my specific setup. If you’re adapting it, ensure you update paths in the `compose-*.yml` files! ⚠️   
+You may also need to adjust all of the traefik labels to match your domain. 🌐
 
 ---
 
