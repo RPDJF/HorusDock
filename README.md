@@ -14,15 +14,7 @@ With HorusDock, you can manage services like monitoring, media servers, ad-block
 
 ## 📝 Notes  
 HorusDock is designed with absolute paths for volumes, meaning it works best on my specific setup. If you’re adapting it, ensure you update paths in the `compose-*.yml` files! ⚠️   
-You may also need to adjust all of the traefik labels to match your domain. 🌐
-
----
-
-## 📋 Features  
-- **Effortless Setup:** Deploy and manage services with minimal effort!  
-- **Self-Hosted Awesomeness:** No need to rely on third-party tools for core services.  
-- **Extensible & Flexible:** Use it as a reference to create your own setup.  
-- **Automation Everywhere:** Updates and certificates are handled automatically.  
+You may also need to adjust all of the traefik labels to match your domain. 🌐 (and `conf/traefik/custom.d/pihole.yml`)
 
 ---
 
@@ -51,12 +43,25 @@ Copy the example `.env` file for Watchtower and make necessary changes:
 cp conf/watchtower/example.env conf/watchtower/.env  
 vim conf/watchtower/.env  
 ```
-### 3️⃣ Deploy Your Services
+### 3️⃣ Configure Traefik
+Edit the `conf/traefik/custom.d/cert-conf.yml` file to use your own certificates:
+```bash
+vim conf/traefik/custom.d/cert-conf.yml  
+```
+Edit the `conf/traefik/custom.d/pihole.yml` file to use your own domain:
+```bash
+vim conf/traefik/custom.d/pihole.yml  
+```
+Edit all the others `compose-*.yml` files to use your own domain:
+```bash
+vim compose-*.yml  
+```
+### 4️⃣ Deploy Your Services
 Start everything up in detached mode:
 ```bash
 ./all-compose.sh up -d  
 ```
-### 4️⃣ 🎉 Enjoy Your New Server!
+### 5️⃣ 🎉 Enjoy Your New Server!
 Visit the services you've deployed and start customizing your setup! 🚀
 
 ---
