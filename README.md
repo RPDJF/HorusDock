@@ -44,7 +44,7 @@ cp conf/watchtower/example.env conf/watchtower/.env
 vim conf/watchtower/.env  
 ```
 ### 3️⃣ Configure Traefik
-Edit the `conf/traefik/custom.d/cert-conf.yml` file to use your own certificates:
+Edit the `conf/traefik/custom.d/cert-conf.yml` file to use your own certificates (don't forget to mount them through the `compose-traefik.yml` file):
 ```bash
 vim conf/traefik/custom.d/cert-conf.yml  
 ```
