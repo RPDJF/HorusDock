@@ -1,0 +1,115 @@
+version: "3.6"
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - "TZ= 'Europe/Zurich'"
+      - "AUTO_UPDATE=false"
+      - "PUID=1000"
+      - "PGID=1000"
+    labels:
+      - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.ruinformatique.lan`)"
+      - "traefik.http.routers.radarr.tls=true"
+    volumes:
+      - "/data/radarr/config:/config"
+      - "/mnt/downloads:/volume1/temp/downloadstation"
+      - "/mnt/plexus:/mnt/plexus"
+    restart: always
+  
+  prowlarr:
+    container_name: "prowlarr"
+    image: "lscr.io/linuxserver/prowlarr:latest"
+    environment:
+      - "TZ= 'Europe/Zurich'"
+      - "AUTO_UPDATE=false"
+      - "PUID=1000"
+      - "PGID=1000"
+    labels:
+      - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.ruinformatique.lan`)"
+      - "traefik.http.routers.prowlarr.tls=true"
+    restart: "always"
+    volumes:
+      - "/data/prowlarr/config:/config"
+  
+  jackett:
+    container_name: "jackett"
+    image: "lscr.io/linuxserver/jackett:latest"
+    environment:
+      - "TZ= 'Europe/Zurich'"
+      - "AUTO_UPDATE=false"
+      - "PUID=1000"
+      - "PGID=1000"
+    labels:
+      - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
+      - "traefik.enable=true"
+      - "traefik.http.routers.jackett.rule=Host(`jackett.ruinformatique.lan`)"
+      - "traefik.http.routers.jackett.tls=true"
+    restart: "always"
+    volumes:
+      - "/data/jackett/config:/config"
+      - "/data/jackett/downloads:/downloads"
+
+  plexus:
+    container_name: "plexus"
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Zurich"
+    image: "jellyfin/jellyfin"
+    ports:
+      - "8096:8096"
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.plexus.entrypoints=websecure'
+      - 'traefik.http.routers.plexus.rule=Host(`plexus.ruinformatique.lan`)'
+      - 'traefik.http.routers.plexus.tls=true'
+      - 'traefik.http.routers.plexus.middlewares=plexus-mw'
+      - 'traefik.http.middlewares.plexus-mw.headers.customResponseHeaders.X-Robots-Tag=noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex'
+      - 'traefik.http.middlewares.plexus-mw.headers.SSLRedirect=true'
+      - 'traefik.http.middlewares.plexus-mw.headers.SSLHost=plexus.ruinformatique.lan'
+      - 'traefik.http.middlewares.plexus-mw.headers.SSLForceHost=true'
+      - 'traefik.http.middlewares.plexus-mw.headers.STSSeconds=315360000'
+      - 'traefik.http.middlewares.plexus-mw.headers.STSIncludeSubdomains=true'
+      - 'traefik.http.middlewares.plexus-mw.headers.STSPreload=true'
+      - 'traefik.http.middlewares.plexus-mw.headers.forceSTSHeader=true'
+      - 'traefik.http.middlewares.plexus-mw.headers.frameDeny=true'
+      - 'traefik.http.middlewares.plexus-mw.headers.contentTypeNosniff=true'
+      - 'traefik.http.middlewares.plexus-mw.headers.customresponseheaders.X-XSS-PROTECTION=1'
+      - "traefik.http.middlewares.plexus-mw.headers.customFrameOptionsValue='allow-from https://DOMAIN_NAME'"
+      - 'traefik.http.services.plexus-svc.loadBalancer.server.port=8096'
+      - 'traefik.http.services.plexus-svc.loadBalancer.passHostHeader=true'
+      - 'traefik.http.routers.plexus-insecure.entrypoints=websecure'
+      - 'traefik.http.routers.plexus-insecure.rule=Host(`plexus.ruinformatique.lan`)'
+      - 'traefik.http.routers.plexus-insecure.middlewares=plexus-insecure-mw'
+      - 'traefik.http.middlewares.plexus-insecure-mw.redirectscheme.scheme=https'
+      - 'traefik.http.middlewares.plexus-insecure-mw.redirectscheme.permanent=false'
+      - 'traefik.http.routers.plexus-insecure.service=noop@internal'
+    restart: "always"
+    volumes:
+      - "/data/plexus/cache:/cache"
+      - "/data/plexus/config:/config"
+      - "/mnt/plexus:/mnt/plexus"
+
+  sonarr:
+    container_name: "sonarr"
+    environment:
+      - "TZ=Europe/Zurich"
+      - "PUID=1000"
+      - "PGID=1000"
+    image: "lscr.io/linuxserver/sonarr:latest"
+    labels:
+      - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.ruinformatique.lan`)"
+
+      - "traefik.http.routers.sonarr.tls=true"
+    restart: "always"
+    volumes:
+      - "/data/sonarr/config:/config"
+      - "/mnt/downloads:/volume1/temp/downloadstation"
+      - "/mnt/plexus:/mnt/plexus"
