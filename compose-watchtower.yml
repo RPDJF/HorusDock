@@ -4,6 +4,8 @@ services:
     image: containrrr/watchtower
     container_name: watchtower 
     restart: always 
+    labels:
+      com.centurylinklabs.watchtower.stop-signal: "SIGHUP"
     env_file:
       - ./conf/watchtower/.env
     environment: 
