@@ -7,7 +7,7 @@ services:
     container_name: pihole
     image: pihole/pihole:latest
     labels:
-        com.centurylinklabs.watchtower.stop-signal: "SIGHUP"
+      - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
     network_mode: "host"
     environment:
       TZ: 'Europe/Zurich'
@@ -15,7 +15,6 @@ services:
     volumes:
       - /data/pihole/etc/pihole/:/etc/pihole
       - /data/pihole/etc/dnsmasq.d:/etc/dnsmasq.d
-      - /data/pihole/etc/lighttpd/lighttpd.conf:/etc/lighttpd/lighttpd.conf
     cap_add:
       - NET_ADMIN
     restart: always
