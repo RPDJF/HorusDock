@@ -2,7 +2,7 @@
 
 path="./"
 
-compose_files=$(find "$path" -name "compose-*.yml")
+compose_files=$(find "$path" -name "*-compose-*.yml" | sort -r)
 
 args="$@"
 

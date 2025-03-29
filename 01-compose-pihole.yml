@@ -1,5 +1,3 @@
-version: "3"
-
 # Phihole running in host mode ! may need to change interface
 
 services:
@@ -12,7 +10,11 @@ services:
       # - "80:80/tcp"
       # - "443:443/tcp"
     labels:
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
       - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.ruinformatique.lan`)"
+      - "traefik.http.routers.pihole.tls=true"
     environment:
       TZ: 'Europe/Zurich'
     volumes:

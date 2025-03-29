@@ -1,0 +1,6 @@
+services:
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns:latest
+    restart: always
+    env_file:
+      - ./conf/cloudflare-ddns/.env
