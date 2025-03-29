@@ -22,7 +22,6 @@ You may also need to adjust all of the traefik labels to match your domain. 🌐
 
 | Service           | Description                                                                                    | Documentation Link                         |  
 |-------------------|------------------------------------------------------------------------------------------------|--------------------------------------------|  
-| **Uptime-Kuma** ⏱️  | Monitor uptime for your websites and services. A self-hosted alternative to UptimeRobot. 🖥️  | [Uptime-Kuma Docs](https://github.com/louislam/uptime-kuma) |  
 | **Pi-Hole** 🛡️   | A network-wide ad blocker running in host mode. Optionally use it as a DHCP server! 🚀          | [Pi-Hole Docs](https://github.com/pi-hole/pi-hole) |  
 | **Plexus** 🎞️     | Automate your media server with Jellyfin and other tools for the ultimate streaming experience. 🎬 | [Jellyfin Docs](https://github.com/jellyfin/jellyfin) |  
 | **Traefik** 🔀    | A modern reverse proxy to secure your services with TLS certificates. 🔒                         | [Traefik Docs](https://github.com/traefik/traefik) |  
