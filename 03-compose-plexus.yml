@@ -14,7 +14,7 @@ services:
       - "traefik.http.routers.radarr.tls=true"
     volumes:
       - "/data/radarr/config:/config"
-      - "/mnt/downloads:/volume1/temp/downloadstation"
+      - "/mnt/downloads:/mnt/downloads"
       - "/mnt/plexus:/mnt/plexus"
     restart: always
   
@@ -69,12 +69,14 @@ services:
       - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
       - 'traefik.enable=true'
       - 'traefik.http.routers.plexus.entrypoints=websecure'
-      - 'traefik.http.routers.plexus.rule=Host(`plexus.ruinformatique.lan`) || Host(`plexus.ruinformatique.ch`)'
+      - 'traefik.http.routers.plexus.rule=Host(`plexus.ruinformatique.ch`)'
       - 'traefik.http.routers.plexus.tls=true'
+      - 'traefik.http.routers.plexus.tls.certresolver=le'
+      - 'traefik.http.routers.plexus.tls.domains[0].main=ruinformatique.ch'
       - 'traefik.http.routers.plexus.middlewares=plexus-mw'
       - 'traefik.http.middlewares.plexus-mw.headers.customResponseHeaders.X-Robots-Tag=noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex'
       - 'traefik.http.middlewares.plexus-mw.headers.SSLRedirect=true'
-#      - 'traefik.http.middlewares.plexus-mw.headers.SSLHost=plexus.ruinformatique.lan'
+      - 'traefik.http.middlewares.plexus-mw.headers.SSLHost=plexus.ruinformatique.ch'
       - 'traefik.http.middlewares.plexus-mw.headers.SSLForceHost=true'
       - 'traefik.http.middlewares.plexus-mw.headers.STSSeconds=315360000'
       - 'traefik.http.middlewares.plexus-mw.headers.STSIncludeSubdomains=true'
@@ -83,11 +85,11 @@ services:
       - 'traefik.http.middlewares.plexus-mw.headers.frameDeny=true'
       - 'traefik.http.middlewares.plexus-mw.headers.contentTypeNosniff=true'
       - 'traefik.http.middlewares.plexus-mw.headers.customresponseheaders.X-XSS-PROTECTION=1'
-      - "traefik.http.middlewares.plexus-mw.headers.customFrameOptionsValue='allow-from https://DOMAIN_NAME'"
+      - "traefik.http.middlewares.plexus-mw.headers.customFrameOptionsValue='allow-from https://plexus.ruinformatique.ch'"
       - 'traefik.http.services.plexus-svc.loadBalancer.server.port=8096'
       - 'traefik.http.services.plexus-svc.loadBalancer.passHostHeader=true'
       - 'traefik.http.routers.plexus-insecure.entrypoints=websecure'
-      - 'traefik.http.routers.plexus-insecure.rule=Host(`plexus.ruinformatique.lan`) || Host(`plexus.ruinformatique.ch`)'
+      - 'traefik.http.routers.plexus-insecure.rule=Host(`plexus.ruinformatique.ch`)'
       - 'traefik.http.routers.plexus-insecure.middlewares=plexus-insecure-mw'
       - 'traefik.http.middlewares.plexus-insecure-mw.redirectscheme.scheme=https'
       - 'traefik.http.middlewares.plexus-insecure-mw.redirectscheme.permanent=false'
