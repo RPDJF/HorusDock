@@ -3,7 +3,10 @@ services:
     container_name: traefik
     image: traefik:latest
     command:
-      - --log.level=TRACE
+      - --log.level=INFO
+      - --accesslog=true
+      - --accesslog.filepath=/var/log/traefik/access.log
+      - --accesslog.filters.statusCodes=400-499
       - --api.insecure=true
       - --providers.docker
       - --entryPoints.web.address=:80
@@ -33,4 +36,5 @@ services:
       - /data/traefik/ca/:/etc/ca/
       - ./conf/traefik/:/etc/traefik/
       - ./conf/traefik/resolv.conf:/etc/resolv.conf
+      - ./conf/traefik/logs:/var/log/traefik
     restart: "always"

@@ -1,2 +1,6 @@
 .env
 **/traefik/acme.json
+**/logs
+logs.txt
+*.log
+*.logs
