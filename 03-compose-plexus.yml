@@ -14,8 +14,8 @@ services:
       - "traefik.http.routers.radarr.tls=true"
     volumes:
       - "/data/radarr/config:/config"
-      - "/mnt/downloads:/mnt/downloads"
       - "/mnt/plexus:/mnt/plexus"
+      - "/mnt/plexus2:/mnt/plexus2"
     restart: always
   
   prowlarr:
@@ -101,6 +101,7 @@ services:
       - "/data/plexus/cache:/cache"
       - "/data/plexus/config:/config"
       - "/mnt/plexus:/mnt/plexus"
+      - "/mnt/plexus2:/mnt/plexus2"
 
   sonarr:
     container_name: "sonarr"
@@ -117,8 +118,8 @@ services:
     restart: "always"
     volumes:
       - "/data/sonarr/config:/config"
-      - "/mnt/downloads:/mnt/downloads"
       - "/mnt/plexus:/mnt/plexus"
+      - "/mnt/plexus2:/mnt/plexus2"
 
         #  flaresolverr:
         #    container_name: "flaresolverr"
