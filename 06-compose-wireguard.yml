@@ -1,0 +1,24 @@
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    labels:
+      - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    env_file:
+    - ./conf/wireguard/.env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Zurich
+      - PEERS=2
+      - LOG_CONFS=true
+    volumes:
+      - /data/wireguard/config:/config
+    ports:
+      - ${SERVERPORT}:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: always
