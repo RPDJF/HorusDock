@@ -1,0 +1,43 @@
+services:
+  mcserver:
+    image: itzg/minecraft-server:latest
+    container_name: mcserver
+#    labels:
+#      - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
+#    env_file:
+#    - file
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Zurich
+      INIT_MEMORY: 2G
+      MAX_MEMORY: 10G
+      DIFFICULTY: hard
+      VIEW_DISTANCE: 16
+      VERSION: 1.21.5
+      EULA: TRUE
+      TYPE: FABRIC
+      MODRINTH_DEFAULT_VERSION_TYPE: beta
+      # lithostitched, dungeons raise, distant horizons and journeymap, c2m, pickablevillagers installed manually
+      MODRINTH_PROJECTS: |
+        fabric-api
+        lithium
+        cloth-config
+        architectury-api
+        creativecore
+        clumps
+        better-stats
+        tcdcommons
+        netherportalfix
+        easy-anvils
+        easy-magic
+        easy-shulker-boxes
+        puzzles-lib
+        balm
+        forge-config-api-port
+    volumes:
+      - /data/mcserver/:/data
+      - /opt/jdk-22.0.2/:/opt/java/openjdk
+    ports:
+      - 25565:25565
+    restart: always

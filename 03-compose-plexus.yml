@@ -35,24 +35,25 @@ services:
     volumes:
       - "/data/prowlarr/config:/config"
   
-  jackett:
-    container_name: "jackett"
-    image: "lscr.io/linuxserver/jackett:latest"
-    environment:
-      - "TZ= 'Europe/Zurich'"
-      - "AUTO_UPDATE=false"
-      - "PUID=1000"
-      - "PGID=1000"
-    labels:
-      - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
-      - "traefik.enable=true"
-      - "traefik.http.routers.jackett.rule=Host(`jackett.ruinformatique.lan`)"
-      - "traefik.http.routers.jackett.tls=true"
-      - "traefik.http.services.jackett.loadbalancer.server.port=80"
-    restart: "always"
-    volumes:
-      - "/data/jackett/config:/config"
-      - "/data/jackett/downloads:/downloads"
+# jackett replaced by prowlarr
+#  jackett:
+#    container_name: "jackett"
+#    image: "lscr.io/linuxserver/jackett:latest"
+#    environment:
+#      - "TZ= 'Europe/Zurich'"
+#      - "AUTO_UPDATE=false"
+#      - "PUID=1000"
+#      - "PGID=1000"
+#    labels:
+#      - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.jackett.rule=Host(`jackett.ruinformatique.lan`)"
+#      - "traefik.http.routers.jackett.tls=true"
+#      - "traefik.http.services.jackett.loadbalancer.server.port=80"
+#    restart: "always"
+#    volumes:
+#      - "/data/jackett/config:/config"
+#      - "/data/jackett/downloads:/downloads"
 
   plexus:
     container_name: "plexus"
@@ -65,8 +66,6 @@ services:
       - "989"
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
-    ports:
-      - "8096:8096"
     labels:
       - "com.centurylinklabs.watchtower.stop-signal=SIGHUP"
       - 'traefik.enable=true'
